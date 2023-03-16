@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html class="wide wow-animation" lang="en">
+	<head>
+		<title>Home</title>
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport"
+			content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="utf-8">
+		<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="css/fonts.css">
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" href="css/style.css">
+		<script src="js/vue.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.26.1/axios.min.js"></script>
+		<!--[if lt IE 10]>
+    <div style="background: #212121; padding: 10px 0; box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3); clear: both; text-align:center; position: relative; z-index:1;"><a href="http://windows.microsoft.com/en-US/internet-explorer/"><img src="images/ie8-panel/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a></div>
+    <script src="js/html5shiv.min.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+
+		<div class="page" id="content">
+			<header class="page-head">
+
+			</header>
+
+
+
+			<section class="section-50 section-md-75 section-lg-100">
+				<div class="container">
+					<div class="row row-40">
+						<div class="col-md-6 col-lg-4 height-fill">
+							<article class="icon-box">
+								<div class="box-top">
+									<div class="box-icon"><span
+											class="novi-icon icon icon-primary icon-lg mercury-icon-briefcase"></span>
+									</div>
+									<div class="box-header">
+										<a>
+											<label>
+												<h5>上传</h5>
+												<input type="file" id="fileInput"
+													accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+													hidden="hidden" onchange="uploadAction()" />
+											</label>
+										</a>
+
+									</div>
+								</div>
+								<div class="divider bg-accent"></div>
+								<div class="box-body">
+									<p>上传分成明细表</p>
+									<p>{{text1}}</p>
+								</div>
+							</article>
+						</div>
+						<div class="col-md-6 col-lg-4 height-fill">
+							<article class="icon-box">
+								<div class="box-top">
+									<div class="box-icon"><span
+											class="novi-icon icon icon-primary icon-lg mercury-icon-users"></span></div>
+									<div class="box-header">
+										<label>
+											<h5 onclick="downloadexcel()">下载</h5>
+										</label>
+									</div>
+								</div>
+								<div class="divider bg-accent"></div>
+								<div class="box-body">
+									<p>下载发展清单</p>
+									<p>{{text2}}</p>
+								</div>
+							</article>
+						</div>
+						<div class="col-md-6 col-lg-4 height-fill">
+							<article class="icon-box">
+								<div class="box-top">
+									<div class="box-icon"><span
+											class="novi-icon icon icon-primary icon-lg mercury-icon-briefcase"></span>
+									</div>
+									<div class="box-header">
+
+										<label>
+											<h5 onclick="remove()">清空</h5>
+
+										</label>
+									</div>
+								</div>
+								<div class="divider bg-accent"></div>
+								<div class="box-body">
+									<p>清空当前分成信息</p>
+									<p>{{text3}}</p>
+								</div>
+							</article>
+						</div>
+					</div>
+				</div>
+			</section>
+
+
+
+
+		</div>
+		<div class="snackbars" id="form-output-global"></div>
+		<script src="js/core.min.js"></script>
+		<script src="js/script.js"></script>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el: '#content',
+				data: {
+					text1: "",
+					text2: "",
+					text3: "",
+				},
+				methods: {
+
+				}
+			})
+
+			var path = 'http://42.193.131.33:8080';//"http://192.168.137.1:8080";
+
+			function uploadAction() {
+				var fileWidget = document.getElementById('fileInput');
+				console.log(fileWidget);
+				let param = new FormData();
+				param.append("name", "winney");
+
+
+				let file = fileWidget.files[0];
+
+				if (!file) {
+					alert('请先选择上传的文件')
+					return false
+				}
+				if (file.size > 10000000) {
+					mui.alert('文件不能超过10MB');
+				} else {
+					//通过append向form对象添加数据
+					param.append("file", file);
+					//FormData私有类对象，访问不到，可以通过get判断值是否传进去
+					console.log(param.get("file"));
+
+					let config = {
+						//添加请求头
+						headers: {
+							"Content-Type": "multipart/form-data"
+						},
+						//添加上传进度监听事件
+						onUploadProgress: e => {
+							var completeProgress = ((e.loaded / e.total * 100) | 0) + "%";
+							this.progress = completeProgress;
+						}
+					};
+
+
+					axios.post(path + '/common/excel', param, config).then(
+							function(response) {
+
+								vm.text1 += response.data.data + "\n";
+								fileWidget.files.remove(0);
+							})
+						.catch(function(error) {
+							console.log(error);
+						});
+				}
+
+
+			}
+
+			function remove() {
+				axios.get(path + '/common/remove', {
+						params: {
+
+						}
+					})
+					.then(function(response) {
+						if (response.data.code == 1) {
+							
+							vm.text3 = response.data.data;
+							new Promise(function(resolve, reject) {
+								setTimeout(function() {
+									vm.text3 = "";
+									resolve();
+								}, 20000);
+							});
+							
+						}
+					})
+			}
+			
+			function downloadexcel(){
+				axios.post(path + '/common/downloadexcel',{},{ // 用axios发送post请求
+			                method: 'post',
+			                url: path+'/common/downloadexcel', // 请求地址
+			                data: "", // 参数
+			                responseType: 'blob' // 表明返回服务器返回的数据类型
+			            }).then(
+					function(res) {
+			
+						let blob = new Blob([res.data], {type: res.data.type})
+						const fileName = '发展清单.xls';
+						let downloadElement = document.createElement('a')
+						let href = window.URL.createObjectURL(blob); //创建下载的链接
+						downloadElement.href = href;
+						downloadElement.download = fileName; //下载后文件名
+						document.body.appendChild(downloadElement);
+						downloadElement.click(); //点击下载
+						document.body.removeChild(downloadElement); //下载完成移除元素
+						window.URL.revokeObjectURL(href); //释放blob
+						message.success('upload successfully.');
+					})
+				.catch(function(error) {
+					console.log(error);
+				});
+			}
+			
+			
+			 
+		</script>
+	</body>
+</html>

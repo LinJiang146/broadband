@@ -1,0 +1,23 @@
+#star_div {
+	display: inline-block;
+	font-size: 0px;
+}
+
+span {
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	background-size: 30px 30px;
+}
+
+.full-star {
+	background-image: url('images/fullstar.png');
+}
+
+.empty-star {
+	background-image: url('images/emptystar.png');
+}
+
+.half-star {
+	background-image: url('images/halfstar.png');
+}
