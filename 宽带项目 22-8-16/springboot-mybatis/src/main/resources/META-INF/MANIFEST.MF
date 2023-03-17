@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Main-Class: com.example.springbootmybatis.SpringbootMybatisApplication
+Main-Class: com.wei.broadband.SpringbootMybatisApplication
 Class-Path: spring-boot-starter-json-2.4.5.jar logback-core-1.2.3.jar sp
  ring-boot-2.4.5.jar tomcat-annotations-api-9.0.45.jar mybatis-plus-anno
  tation-3.4.2.jar jakarta.annotation-api-1.3.5.jar spring-aop-5.3.6.jar 
