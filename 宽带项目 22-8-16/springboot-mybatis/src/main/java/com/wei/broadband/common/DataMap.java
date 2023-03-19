@@ -4,7 +4,6 @@ import com.wei.broadband.po.BroadbandCustomer;
 import com.wei.broadband.po.CustomerBilling;
 import com.wei.broadband.po.Package;
 import com.wei.broadband.po.User;
-import com.example.springbootmybatis.service.*;
 import com.wei.broadband.service.*;
 import lombok.Getter;
 import org.apache.commons.lang.StringUtils;

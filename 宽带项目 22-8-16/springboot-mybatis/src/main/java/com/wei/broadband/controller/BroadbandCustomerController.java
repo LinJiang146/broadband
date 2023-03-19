@@ -4,8 +4,6 @@ import com.wei.broadband.common.R;
 import com.wei.broadband.dto.BroadbandDTO;
 
 import com.wei.broadband.dto.DTO;
-import com.example.springbootmybatis.po.*;
-import com.example.springbootmybatis.service.*;
 import com.wei.broadband.po.BroadbandCustomer;
 import com.wei.broadband.service.BroadbandCustomerService;
 import lombok.extern.slf4j.Slf4j;

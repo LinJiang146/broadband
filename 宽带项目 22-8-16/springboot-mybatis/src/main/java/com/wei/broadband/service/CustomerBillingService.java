@@ -3,7 +3,11 @@ package com.wei.broadband.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.wei.broadband.common.R;
+import com.wei.broadband.dto.CusBillDTO;
 import com.wei.broadband.po.CustomerBilling;
+
+import java.util.List;
 
 /**
  * 
@@ -14,5 +18,10 @@ import com.wei.broadband.po.CustomerBilling;
  */
 public interface CustomerBillingService extends IService<CustomerBilling> {
 
+    R<String> addBillList(List<CustomerBilling> billingList);
+
+    List<String> getBillDate();
+
+    List<CusBillDTO> getCusBillData(String date);
 }
 
