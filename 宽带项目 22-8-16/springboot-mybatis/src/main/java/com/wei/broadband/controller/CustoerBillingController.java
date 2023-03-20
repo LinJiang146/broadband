@@ -30,39 +30,23 @@ import java.util.Map;
 @Slf4j
 public class CustoerBillingController {
 
-
-
     @Autowired
     private CustomerBillingService billingService;
 
-
-
     @PostMapping("addBillList")
     public R<String> addBillList(@RequestBody List<CustomerBilling> billingList){
-
         return billingService.addBillList(billingList);
-
-
-
-
     }
 
     @GetMapping("getBillDate")
     public R<List<String>> getBillDate(){
-
         List<String> dateList = billingService.getBillDate();
-
         return R.success(dateList);
     }
+
     @GetMapping("getCusBillData")
     public R<List<CusBillDTO>> getCusBillData(String date){
-
-
         List<CusBillDTO> listDTO = billingService.getCusBillData(date);
-
-
-
-
         return R.success(listDTO);
     }
 }

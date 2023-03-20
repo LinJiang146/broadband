@@ -7,7 +7,7 @@ import com.wei.broadband.po.BroadbandCustomer;
 import com.wei.broadband.po.CardCustomer;
 import com.wei.broadband.po.Revenue;
 import com.wei.broadband.po.User;
-import com.example.springbootmybatis.service.*;
+
 import com.wei.broadband.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

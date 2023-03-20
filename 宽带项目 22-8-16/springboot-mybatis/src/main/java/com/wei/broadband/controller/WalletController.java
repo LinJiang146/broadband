@@ -48,31 +48,9 @@ public class WalletController {
     @GetMapping("getMyPaymentsList")
     public R<List<PaymentsEntity>> getMyPaymentsList(HttpServletRequest request, String content, String type, String startTime, String endTime, Integer status){
         LambdaQueryWrapper<PaymentsEntity> queryWrapper = new LambdaQueryWrapper<>();
-
         int id = (int)request.getSession().getAttribute("user");
         queryWrapper.eq(PaymentsEntity::getUserId,id);
-
-
-
-//        queryWrapper.eq(StringUtils.isNotEmpty(type),PaymentsEntity::getType,type)
-//                .eq(status!=null,PaymentsEntity::getStatus,status);
-
-
-//        DateTimeFormatter pattern = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//        if (StringUtils.isNotEmpty(startTime)){
-//            queryWrapper.ge(PaymentsEntity::getDateTime,LocalDateTime.parse(startTime,pattern));
-//        }
-//        if (StringUtils.isNotEmpty(endTime)){
-//            queryWrapper.le(PaymentsEntity::getDateTime,LocalDateTime.parse(endTime,pattern));
-//        }
-//        if (StringUtils.isNotEmpty(content)){
-//            queryWrapper.and((i)->{ i.like(PaymentsEntity::getDescription,content)
-//                            .or().like(PaymentsEntity::getUserName,content);
-//                    }
-//            );
-//        }
         queryWrapper.orderByDesc(PaymentsEntity::getDateTime);
-
         return R.success(paymentsService.list(queryWrapper));
     }
 
@@ -236,8 +214,6 @@ public class WalletController {
                         .eq(WithdrawalsEntity::getStatus,1)
         );
         List<User> userList = userService.list();
-
-
         //计算余额
         Map<Integer,UserBalanceDTO> balanceDTOMap = new HashMap<>();
         for (User user : userList) {
