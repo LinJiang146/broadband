@@ -26,7 +26,7 @@ public class CommonController {
     }
 
     @PostMapping("/uploadImg")
-    public R<String> uploadImg(MultipartFile file) throws IOException {
+    public R<String> uploadImg(MultipartFile file) {
         String filename = commonService.uploadImg(file);
         return R.success(filename);
     }

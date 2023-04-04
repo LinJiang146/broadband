@@ -31,16 +31,11 @@ public class PackageController {
     public R<String> save(HttpServletRequest request, @RequestBody Package pack) {
         int id = (int) request.getSession().getAttribute("user");
         return packageService.savePackage(id,pack);
-
     }
 
     @GetMapping("/lists")
     public R<List<Package>> list(String content,Integer sort,Integer type){
-
         return packageService.packageList(content,sort,type);
-
-
-
     }
 
 
@@ -54,7 +49,6 @@ public class PackageController {
     public R<String> updata(HttpServletRequest request,@RequestBody Package pack){
         int id = (int)request.getSession().getAttribute("user");
         return packageService.updataPackage(id,pack);
-
     }
 
 
@@ -62,7 +56,5 @@ public class PackageController {
     public R<String> delete(HttpServletRequest request,int id){
         int userid = (int)request.getSession().getAttribute("user");
         return packageService.deletePackage(userid,id);
-
-
     }
 }
